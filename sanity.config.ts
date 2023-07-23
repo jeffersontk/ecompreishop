@@ -1,34 +1,25 @@
 /**
- * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
+ * This configuration is used to for the Sanity Studio that’s mounted on the `\src\app\studio\[[...index]]\page.tsx` route
  */
 
-import { visionTool } from '@sanity/vision'
-import { defineConfig } from 'sanity'
-import { deskTool } from 'sanity/desk'
+import {visionTool} from '@sanity/vision'
+import {defineConfig} from 'sanity'
+import {deskTool} from 'sanity/desk'
 
-// see https://www.sanity.io/docs/api-versioning for how versioning works
-import {
-  apiVersion,
-  dataset,
-  previewSecretId,
-  projectId,
-} from '~/lib/sanity.api'
-import { schema } from '~/schemas'
-import { productionUrl } from '~/utils/productionUrl'
+// Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
+import {apiVersion, dataset, projectId} from './src/lib/sanity.api'
+import {schema} from './src/schemas'
 
 export default defineConfig({
   basePath: '/studio',
-  name: 'project-name',
-  title: 'Project Name',
   projectId,
   dataset,
-  //edit schemas in './src/schemas'
+  // Add and edit the content schema in the './sanity/schema' folder
   schema,
   plugins: [
     deskTool(),
-    // Vision lets you query your content with GROQ in the studio
+    // Vision is a tool that lets you query your content with GROQ in the studio
     // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({ defaultApiVersion: apiVersion }),
-    productionUrl({ previewSecretId, types: ['post'], apiVersion }),
+    visionTool({defaultApiVersion: apiVersion}),
   ],
 })
